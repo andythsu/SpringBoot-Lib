@@ -1,4 +1,4 @@
-package Services;
+package org.github.andythsu.Services;
 
 import com.google.cloud.Timestamp;
 import com.google.cloud.datastore.*;
