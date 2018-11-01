@@ -18,8 +18,6 @@ public class DatastoreService {
 
     private static final KeyFactory keyFactory = datastore.newKeyFactory();
 
-    private static UtilService.commonNames commonNames;
-
     public static Iterator<Entity> getAllByKind(String kind) {
         Query<Entity> query = Query.newEntityQueryBuilder()
                 .setKind(kind)
@@ -30,16 +28,20 @@ public class DatastoreService {
     public static Iterator<Entity> getLastCreatedByKind(String kind){
         Query<Entity> query = Query.newEntityQueryBuilder()
                 .setKind(kind)
-                .setOrderBy(StructuredQuery.OrderBy.desc(commonNames.CREATEDAT))
+                .setOrderBy(StructuredQuery.OrderBy.desc(UtilService.commonNames.CREATEDAT))
                 .setLimit(1)
                 .build();
+        return datastore.run(query);
+    }
+
+    public static Iterator<Entity> runQuery(Query<Entity> query){
         return datastore.run(query);
     }
 
     public static Iterator<Entity> getLastUpdatedByKind(String kind){
         Query<Entity> query = Query.newEntityQueryBuilder()
                 .setKind(kind)
-                .setOrderBy(StructuredQuery.OrderBy.desc(commonNames.UPDATEDAT))
+                .setOrderBy(StructuredQuery.OrderBy.desc(UtilService.commonNames.UPDATEDAT))
                 .setLimit(1)
                 .build();
         return datastore.run(query);
