@@ -10,6 +10,7 @@ public class UtilService {
         public static final String JSON = "Json";
         public static final String CREATEDAT = "CreatedAt";
         public static final String EXPIREDAT = "ExpiredAt";
+        public static final String UPDATEDAT = "UpdatedAt";
     }
 
     public static JSONObject parseToJSON(String json) {

@@ -1,5 +1,7 @@
 package org.github.andythsu.GCP.Services.Error;
 
+import sun.plugin2.message.Message;
+
 import java.net.HttpURLConnection;
 
 public class MessageKey {
@@ -28,12 +30,19 @@ public class MessageKey {
             .message("Network Error")
             .status(HttpURLConnection.HTTP_GATEWAY_TIMEOUT);
 
+    public static final MessageKey UNAUTHORIZED = new MessageKey()
+            .tag(MessageKeyTags.CREDENTIAL_ERROR)
+            .message("Invalid Credentials")
+            .status(HttpURLConnection.HTTP_UNAUTHORIZED);
+
 
     public static class MessageKeyTags {
         public static final String DATA_ERROR = "DATA-ERROR";
         public static final String INVALID_JSON = "INVALID-JSON";
         public static final String INVALID_PARAM = "INVALID-PARAM";
         public static final String NETWORK_ERROR = "NETWORK-ERROR";
+        public static final String CREDENTIAL_ERROR = "CREDENTIAL-ERROR";
+        public static final String RUN_TIME_ERROR = "RUN-TIME-ERROR";
     }
 
     public MessageKey(final int status, final String tag, final String defaultMessage) {

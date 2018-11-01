@@ -36,6 +36,15 @@ public class DatastoreService {
         return datastore.run(query);
     }
 
+    public static Iterator<Entity> getLastUpdatedByKind(String kind){
+        Query<Entity> query = Query.newEntityQueryBuilder()
+                .setKind(kind)
+                .setOrderBy(StructuredQuery.OrderBy.desc(commonNames.UPDATEDAT))
+                .setLimit(1)
+                .build();
+        return datastore.run(query);
+    }
+
     public static String saveByKind(String kind, Map<String, Object> data){
         keyFactory.setKind(kind);
         Key taskKey = datastore.allocateId(keyFactory.newKey());
