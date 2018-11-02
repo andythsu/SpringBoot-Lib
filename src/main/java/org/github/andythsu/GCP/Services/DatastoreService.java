@@ -22,7 +22,7 @@ public class DatastoreService {
         Query<Entity> query = Query.newEntityQueryBuilder()
                 .setKind(kind)
                 .build();
-        return datastore.run(query);
+        return runQuery(query);
     }
 
     public static Iterator<Entity> getLastCreatedByKind(String kind){
@@ -31,7 +31,7 @@ public class DatastoreService {
                 .setOrderBy(StructuredQuery.OrderBy.desc(UtilService.commonNames.CREATEDAT))
                 .setLimit(1)
                 .build();
-        return datastore.run(query);
+        return runQuery(query);
     }
 
     /**
@@ -43,7 +43,7 @@ public class DatastoreService {
                 .setKind(kind)
                 .setFilter(StructuredQuery.PropertyFilter.eq(col, data))
                 .build();
-        return datastore.run(query);
+        return runQuery(query);
     }
 
     /**
@@ -68,7 +68,7 @@ public class DatastoreService {
                 .setOrderBy(StructuredQuery.OrderBy.desc(UtilService.commonNames.UPDATEDAT))
                 .setLimit(1)
                 .build();
-        return datastore.run(query);
+        return runQuery(query);
     }
 
     public static String saveByKind(String kind, Map<String, Object> data){
