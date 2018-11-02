@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
  * @author: Andy Su
  * @Date: 11/1/2018
  */
-public class SendMail {
+public class Mail {
 
     private static class UserCredential{
         private final String userName;
