@@ -38,7 +38,7 @@ public class SendMail {
         }
     }
 
-    public static void sendEmail(String token){
+    public static void sendEmail(MailContent mailContent){
         UserCredential credential = initUser();
         if (credential == null) throw new WebRequestException(MessageKey.UNAUTHORIZED);
         String userName = credential.getUserName();
@@ -64,8 +64,8 @@ public class SendMail {
             message.setFrom(new InternetAddress(userName));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(recipient));
-            message.setSubject("Token");
-            message.setText(token);
+            message.setSubject(mailContent.getSubject());
+            message.setText(mailContent.getBody());
 
             Transport.send(message);
 
