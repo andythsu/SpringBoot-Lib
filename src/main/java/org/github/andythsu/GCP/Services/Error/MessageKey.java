@@ -1,7 +1,5 @@
 package org.github.andythsu.GCP.Services.Error;
 
-import sun.plugin2.message.Message;
-
 import java.net.HttpURLConnection;
 
 public class MessageKey {
