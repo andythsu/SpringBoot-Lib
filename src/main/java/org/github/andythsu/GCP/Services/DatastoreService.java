@@ -38,10 +38,10 @@ public class DatastoreService {
      * return all entities if exists
      * @return
      */
-    public static Iterator<Entity> getAllByKindAndType(String kind, String col, String type){
+    public static Iterator<Entity> getAllByKindAndData(String kind, String col, String data){
         Query<Entity> query = Query.newEntityQueryBuilder()
                 .setKind(kind)
-                .setFilter(StructuredQuery.PropertyFilter.eq(col, type))
+                .setFilter(StructuredQuery.PropertyFilter.eq(col, data))
                 .build();
         return datastore.run(query);
     }
@@ -50,12 +50,12 @@ public class DatastoreService {
      * check if data exists in column
      * @param kind
      * @param col
-     * @param type
+     * @param data
      * @return
      */
-    public static boolean isTypeInKind(String kind, String col, String type){
-        Iterator<Entity> data = getAllByKindAndType(kind, col, type);
-        return data.hasNext();
+    public static boolean isTypeInKind(String kind, String col, String data){
+        Iterator<Entity> en = getAllByKindAndData(kind, col, data);
+        return en.hasNext();
     }
 
     public static Iterator<Entity> runQuery(Query<Entity> query){

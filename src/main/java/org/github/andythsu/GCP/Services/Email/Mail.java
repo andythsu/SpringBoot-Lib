@@ -1,6 +1,7 @@
 package org.github.andythsu.GCP.Services.Email;
 
 import com.google.cloud.datastore.Entity;
+import org.apache.commons.codec.binary.StringUtils;
 import org.github.andythsu.GCP.Services.DatastoreService;
 import org.github.andythsu.GCP.Services.Error.MessageKey;
 import org.github.andythsu.GCP.Services.Error.WebRequestException;
@@ -23,27 +24,20 @@ import javax.mail.internet.MimeMessage;
  */
 public class Mail {
 
-    private static class UserCredential{
-        private final String userName;
-        private final String password;
-        public UserCredential(String userName, String password){
-            this.userName = userName;
-            this.password = password;
-        }
-        public String getUserName() {
-            return userName;
-        }
-        public String getPassword() {
-            return password;
-        }
+    public static void sendEmail(MailContent mailContent) {
+        sendEmail(mailContent, null);
     }
 
-    public static void sendEmail(MailContent mailContent){
-        UserCredential credential = initUser();
-        if (credential == null) throw new WebRequestException(MessageKey.UNAUTHORIZED);
-        String userName = credential.getUserName();
-        String password = credential.getPassword();
-        String recipient = "f2280c@gmail.com";
+    public static void sendEmail(MailContent mailContent, UserCredential userCredential) {
+        if (userCredential == null) {
+            userCredential = initDefaultUser();
+        }
+
+        String userName = userCredential.getUserName();
+        String password = userCredential.getPassword();
+        String recipient = mailContent.getRecipient();
+        String subject = mailContent.getSubject();
+        String body = mailContent.getBody();
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -64,8 +58,8 @@ public class Mail {
             message.setFrom(new InternetAddress(userName));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(recipient));
-            message.setSubject(mailContent.getSubject());
-            message.setText(mailContent.getBody());
+            message.setSubject(subject);
+            message.setText(body);
 
             Transport.send(message);
 
@@ -78,15 +72,20 @@ public class Mail {
         }
     }
 
-    private static UserCredential initUser(){
-        Iterator<Entity> data = DatastoreService.getLastUpdatedByKind("credential");
+    private static UserCredential initDefaultUser() {
+        String credential_col = "credential";
         String user_col = "Username";
         String pwd_col = "Password";
+
+        Iterator<Entity> data = DatastoreService.getLastUpdatedByKind(credential_col);
         UserCredential credential = null;
-        while (data.hasNext()){
+        while (data.hasNext()) {
             Entity en = data.next();
             credential = new UserCredential(en.getString(user_col), en.getString(pwd_col));
         }
+
+        if (credential == null) throw new WebRequestException(MessageKey.UNAUTHORIZED);
+
         return credential;
     }
 
