@@ -2,9 +2,11 @@ package org.github.andythsu.GCP.Services.Token;
 
 import com.google.cloud.Timestamp;
 import org.apache.commons.lang.time.DateUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class AuthToken {
     private String token;
     private Timestamp createdAt;

@@ -1,10 +1,10 @@
 package org.github.andythsu.GCP.Services.Email;
 
 import com.google.cloud.datastore.Entity;
-import org.apache.commons.codec.binary.StringUtils;
-import org.github.andythsu.GCP.Services.DatastoreService;
+import org.github.andythsu.GCP.Services.Datastore.DatastoreService;
 import org.github.andythsu.GCP.Services.Error.MessageKey;
 import org.github.andythsu.GCP.Services.Error.WebRequestException;
+import org.springframework.stereotype.Component;
 
 import java.net.HttpURLConnection;
 import java.util.Iterator;
@@ -22,13 +22,14 @@ import javax.mail.internet.MimeMessage;
  * @author: Andy Su
  * @Date: 11/1/2018
  */
+@Component
 public class Mail {
 
     public static void sendEmail(MailContent mailContent) {
         sendEmail(mailContent, null);
     }
 
-    public static void sendEmail(MailContent mailContent, UserCredential userCredential) {
+    public static void sendEmail(MailContent mailContent, MailUserCredential userCredential) {
         if (userCredential == null) {
             userCredential = initDefaultUser();
         }
@@ -72,16 +73,16 @@ public class Mail {
         }
     }
 
-    private static UserCredential initDefaultUser() {
+    private static MailUserCredential initDefaultUser() {
         String credential_col = "credential";
         String user_col = "Username";
         String pwd_col = "Password";
 
         Iterator<Entity> data = DatastoreService.getLastUpdatedByKind(credential_col);
-        UserCredential credential = null;
+        MailUserCredential credential = null;
         while (data.hasNext()) {
             Entity en = data.next();
-            credential = new UserCredential(en.getString(user_col), en.getString(pwd_col));
+            credential = new MailUserCredential(en.getString(user_col), en.getString(pwd_col));
         }
 
         if (credential == null) throw new WebRequestException(MessageKey.UNAUTHORIZED);

@@ -1,9 +1,11 @@
 package org.github.andythsu.GCP.Services.Token;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class TokenUtil {
     private static int TOKEN_LENGTH = 24;
     public static AuthToken acqureToken(){

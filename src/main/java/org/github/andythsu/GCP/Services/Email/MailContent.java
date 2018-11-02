@@ -1,5 +1,8 @@
 package org.github.andythsu.GCP.Services.Email;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class MailContent {
     private String subject = "";
     private String body = "";

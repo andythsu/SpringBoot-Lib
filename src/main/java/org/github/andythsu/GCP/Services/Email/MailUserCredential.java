@@ -1,14 +1,17 @@
 package org.github.andythsu.GCP.Services.Email;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author: Andy Su
  * @Date: 11/2/2018
  */
-public class UserCredential {
+@Component
+public class MailUserCredential {
     private final String userName;
     private final String password;
 
-    public UserCredential(String userName, String password) {
+    public MailUserCredential(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
