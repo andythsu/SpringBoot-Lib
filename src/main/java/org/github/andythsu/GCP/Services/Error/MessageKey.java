@@ -1,10 +1,7 @@
 package org.github.andythsu.GCP.Services.Error;
 
-import org.springframework.stereotype.Component;
-
 import java.net.HttpURLConnection;
 
-@Component
 public class MessageKey {
 
     private int status = 500;

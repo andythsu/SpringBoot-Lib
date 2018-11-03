@@ -1,12 +1,12 @@
 package org.github.andythsu.GCP.Services.Token;
 
+import com.google.cloud.Timestamp;
+import com.google.cloud.datastore.Entity;
+import org.apache.commons.lang.RandomStringUtils;
 import org.github.andythsu.GCP.Services.Datastore.DatastoreData;
 import org.github.andythsu.GCP.Services.Datastore.DatastoreService;
 import org.github.andythsu.GCP.Services.Error.MessageKey;
 import org.github.andythsu.GCP.Services.Error.WebRequestException;
-import com.google.cloud.Timestamp;
-import com.google.cloud.datastore.Entity;
-import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +56,7 @@ public class TokenUtil {
             if (authToken == null){
                 throw new WebRequestException(MessageKey.INVALID_TOKEN);
             }else{
+                log.info("Token is found in DB. Setting session...");
                 tokenSession.setSession(authToken.getToken(), authToken);
             }
         }
