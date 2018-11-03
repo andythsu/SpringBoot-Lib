@@ -1,28 +1,25 @@
 package org.github.andythsu.GCP.Services.Email;
 
-import com.google.cloud.datastore.Entity;
 import org.github.andythsu.GCP.Services.Datastore.DatastoreService;
 import org.github.andythsu.GCP.Services.Error.MessageKey;
 import org.github.andythsu.GCP.Services.Error.WebRequestException;
-import org.springframework.stereotype.Component;
+import com.google.cloud.datastore.Entity;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.net.HttpURLConnection;
 import java.util.Iterator;
 import java.util.Properties;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+//import org.github.andythsu.GCP.DatastoreService;
+//import org.github.andythsu.GCP.MessageKey;
+//import org.github.andythsu.GCP.WebRequestException;
 
 /**
  * @author: Andy Su
  * @Date: 11/1/2018
  */
-@Component
 public class Mail {
 
     public static void sendEmail(MailContent mailContent) {
@@ -47,7 +44,7 @@ public class Mail {
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
+                new Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(userName, password);
                     }

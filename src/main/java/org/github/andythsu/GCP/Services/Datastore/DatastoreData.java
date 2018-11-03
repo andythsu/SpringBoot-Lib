@@ -1,7 +1,5 @@
 package org.github.andythsu.GCP.Services.Datastore;
 
-import org.springframework.stereotype.Component;
-
 import java.util.*;
 
 /**
@@ -9,7 +7,6 @@ import java.util.*;
  * @Date: 11/2/2018
  */
 
-@Component
 public class DatastoreData {
     /**
      * stores in (col,value) fashion

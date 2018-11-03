@@ -1,17 +1,15 @@
 package org.github.andythsu.GCP.Services.Datastore;
 
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.FetchOptions;
 import com.google.cloud.Timestamp;
 import com.google.cloud.datastore.*;
-import com.google.cloud.datastore.StructuredQuery;
-import org.github.andythsu.GCP.Services.UtilService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Iterator;
 
-import java.util.*;
+//import com.google.appengine.api.datastore.DatastoreServiceFactory;
+//import com.google.appengine.api.datastore.FetchOptions;
 
 @Component
 public class DatastoreService {
@@ -21,6 +19,20 @@ public class DatastoreService {
     private static final Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
     private static final KeyFactory keyFactory = datastore.newKeyFactory();
+
+    public static class DatastoreColumns{
+        public static final String CREATEDAT = "CreatedAt";
+        public static final String EXPIREDAT = "ExpiredAt";
+        public static final String UPDATEDAT = "UpdatedAt";
+        public static final String TOKEN = "Token";
+        public static final String JSON = "Json";
+    }
+
+    public static class DatastoreKinds{
+        public static final String AUTH = "auth";
+        public static final String CREDENTIAL = "credential";
+        public static final String SETTING = "setting";
+    }
 
     public static Iterator<Entity> getAllByKind(String kind) {
         Query<Entity> query = Query.newEntityQueryBuilder()
@@ -32,7 +44,7 @@ public class DatastoreService {
     public static Iterator<Entity> getLastCreatedByKind(String kind) {
         Query<Entity> query = Query.newEntityQueryBuilder()
                 .setKind(kind)
-                .setOrderBy(StructuredQuery.OrderBy.desc(UtilService.commonNames.CREATEDAT))
+                .setOrderBy(StructuredQuery.OrderBy.desc(DatastoreColumns.CREATEDAT))
                 .setLimit(1)
                 .build();
         return runQuery(query);
@@ -121,17 +133,17 @@ public class DatastoreService {
      * @param kind
      * @return
      */
-    public static int countRows(String kind) {
-        com.google.appengine.api.datastore.Query qry = new com.google.appengine.api.datastore.Query(kind);
-        com.google.appengine.api.datastore.DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-        int totalCount = datastoreService.prepare(qry).countEntities(FetchOptions.Builder.withDefaults());
-        return totalCount;
-    }
+//    public static int countRows(String kind) {
+//        com.google.appengine.api.datastore.Query qry = new com.google.appengine.api.datastore.Query(kind);
+//        com.google.appengine.api.datastore.DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+//        int totalCount = datastoreService.prepare(qry).countEntities(FetchOptions.Builder.withDefaults());
+//        return totalCount;
+//    }
 
     public static Iterator<Entity> getLastUpdatedByKind(String kind) {
         Query<Entity> query = Query.newEntityQueryBuilder()
                 .setKind(kind)
-                .setOrderBy(StructuredQuery.OrderBy.desc(UtilService.commonNames.UPDATEDAT))
+                .setOrderBy(StructuredQuery.OrderBy.desc(DatastoreColumns.UPDATEDAT))
                 .setLimit(1)
                 .build();
         return runQuery(query);
