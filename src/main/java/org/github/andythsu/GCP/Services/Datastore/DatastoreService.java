@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
 
-//import com.google.appengine.api.datastore.DatastoreServiceFactory;
-//import com.google.appengine.api.datastore.FetchOptions;
 
 @Component
 public class DatastoreService {
@@ -129,7 +127,7 @@ public class DatastoreService {
 
     /**
      * uses appengine library to fetch rows because there is currently no approach for cloud library
-     *
+     * [warning] appengine is interfering with mailing service.
      * @param kind
      * @return
      */
