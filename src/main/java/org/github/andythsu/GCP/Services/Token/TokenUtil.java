@@ -25,14 +25,34 @@ public class TokenUtil {
     private TokenSession tokenSession;
 
     public AuthToken acqureToken(){
-        String token = RandomStringUtils.randomAlphanumeric(TOKEN_LENGTH);
-        AuthToken authToken = new AuthToken(token);
+        String token = generateToken();
+        AuthToken authToken = findToken(token);
+        // keep looping until new token is generated
+        while(authToken != null){
+            log.info("{} is already in use. Regenerating...", authToken.getToken());
+            token = generateToken();
+            authToken = findToken(token);
+        }
+        authToken = new AuthToken(token);
         tokenSession.setSession(token, authToken);
         return authToken;
+    }
+    public String generateToken(){
+        return RandomStringUtils.randomAlphanumeric(TOKEN_LENGTH);
     }
     public boolean isTokenExpired(AuthToken token){
         if (token == null) throw new WebRequestException(MessageKey.INVALID_TOKEN);
         return token.getExpiredAtTime().before(new Date());
+    }
+    public AuthToken findToken(String token){
+        AuthToken sessionToken = findTokenInSession(token);
+        if (sessionToken != null) return sessionToken;
+        AuthToken dbToken = findTokenInDB(token);
+        if (dbToken != null) return dbToken;
+        return null;
+    }
+    public AuthToken findTokenInSession(String token){
+        return tokenSession.getSession(token);
     }
     public AuthToken findTokenInDB(String token){
         DatastoreData dd = new DatastoreData();
