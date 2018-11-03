@@ -24,6 +24,10 @@ public class TokenUtil {
     @Autowired
     private TokenSession tokenSession;
 
+    /**
+     * return a brand new token
+     * @return AuthToken
+     */
     public AuthToken acqureToken(){
         String token = generateToken();
         AuthToken authToken = findToken(token);
@@ -44,6 +48,12 @@ public class TokenUtil {
         if (token == null) throw new WebRequestException(MessageKey.INVALID_TOKEN);
         return token.getExpiredAtTime().before(new Date());
     }
+
+    /**
+     * find token in either session or db
+     * @param token
+     * @return
+     */
     public AuthToken findToken(String token){
         AuthToken sessionToken = findTokenInSession(token);
         if (sessionToken != null) return sessionToken;
@@ -51,9 +61,11 @@ public class TokenUtil {
         if (dbToken != null) return dbToken;
         return null;
     }
+
     public AuthToken findTokenInSession(String token){
         return tokenSession.getSession(token);
     }
+
     public AuthToken findTokenInDB(String token){
         DatastoreData dd = new DatastoreData();
         dd.put(DatastoreService.DatastoreColumns.TOKEN, token);
@@ -68,6 +80,7 @@ public class TokenUtil {
         }
         return authToken;
     }
+    
     public void validateToken(String token){
         AuthToken authToken = tokenSession.getSession(token);
         if (authToken == null){
