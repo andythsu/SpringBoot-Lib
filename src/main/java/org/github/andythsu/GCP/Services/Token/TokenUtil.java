@@ -77,6 +77,7 @@ public class TokenUtil {
             Timestamp db_createdAt = e.getTimestamp(DatastoreService.DatastoreColumns.CREATEDAT);
             Timestamp db_expiredAt = e.getTimestamp(DatastoreService.DatastoreColumns.EXPIREDAT);
             authToken = new AuthToken(db_token, db_createdAt, db_expiredAt);
+            log.info("Regenerating token from DB...");
         }
         return authToken;
     }
