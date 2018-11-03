@@ -1,7 +1,7 @@
 package org.github.andythsu.GCP.Services.Email;
 
 import com.google.cloud.datastore.Entity;
-import org.github.andythsu.GCP.Services.Datastore.DatastoreService;
+//import org.github.andythsu.GCP.Services.Datastore.DatastoreService;
 import org.github.andythsu.GCP.Services.Error.MessageKey;
 import org.github.andythsu.GCP.Services.Error.WebRequestException;
 
@@ -28,7 +28,8 @@ public class Mail {
 
     public static void sendEmail(MailContent mailContent, MailUserCredential userCredential) {
         if (userCredential == null) {
-            userCredential = initDefaultUser();
+//            userCredential = initDefaultUser();
+            userCredential = new MailUserCredential("sbsp19990501@gmail.com", "spsb19990501");
         }
 
         String userName = userCredential.getUserName();
@@ -70,21 +71,21 @@ public class Mail {
         }
     }
 
-    private static MailUserCredential initDefaultUser() {
-        String credential_col = "credential";
-        String user_col = "Username";
-        String pwd_col = "Password";
-
-        Iterator<Entity> data = DatastoreService.getLastUpdatedByKind(credential_col);
-        MailUserCredential credential = null;
-        while (data.hasNext()) {
-            Entity en = data.next();
-            credential = new MailUserCredential(en.getString(user_col), en.getString(pwd_col));
-        }
-
-        if (credential == null) throw new WebRequestException(MessageKey.UNAUTHORIZED);
-
-        return credential;
-    }
+//    private static MailUserCredential initDefaultUser() {
+//        String credential_col = "credential";
+//        String user_col = "Username";
+//        String pwd_col = "Password";
+//
+//        Iterator<Entity> data = DatastoreService.getLastUpdatedByKind(credential_col);
+//        MailUserCredential credential = null;
+//        while (data.hasNext()) {
+//            Entity en = data.next();
+//            credential = new MailUserCredential(en.getString(user_col), en.getString(pwd_col));
+//        }
+//
+//        if (credential == null) throw new WebRequestException(MessageKey.UNAUTHORIZED);
+//
+//        return credential;
+//    }
 
 }
