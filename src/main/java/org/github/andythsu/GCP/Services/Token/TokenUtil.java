@@ -1,6 +1,7 @@
 package org.github.andythsu.GCP.Services.Token;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -8,11 +9,17 @@ import java.util.Date;
 @Component
 public class TokenUtil {
     private static int TOKEN_LENGTH = 24;
-    public static AuthToken acqureToken(){
+
+    @Autowired
+    private TokenSession tokenSession;
+
+    public AuthToken acqureToken(){
         String token = RandomStringUtils.randomAlphanumeric(TOKEN_LENGTH);
-        return new AuthToken(token);
+        AuthToken authToken = new AuthToken(token);
+        tokenSession.setSession(token, authToken);
+        return authToken;
     }
-    public static boolean isTokenExpired(AuthToken token){
+    public boolean isTokenExpired(AuthToken token){
         return token.getExpiredAtTime().after(new Date());
     }
 }

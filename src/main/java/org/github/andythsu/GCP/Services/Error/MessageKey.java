@@ -7,9 +7,9 @@ import java.net.HttpURLConnection;
 @Component
 public class MessageKey {
 
-    private int status = 500;
-    private String tag = "GENERIC-TAG";
-    private String defaultMessage = "GENERIC-MESSAGE";
+    private static int status = 500;
+    private static String tag = "GENERIC-TAG";
+    private static String defaultMessage = "GENERIC-MESSAGE";
 
     public static final MessageKey INVALID_PARAM = new MessageKey()
             .tag(MessageKeyTags.INVALID_PARAM)
