@@ -24,11 +24,25 @@ public abstract class baseExceptionHandler extends ExceptionHandlerExceptionReso
         if (t instanceof WebRequestException){
             return this.handleException((WebRequestException) t);
         }else{
-            return new ResponseEntity(t, getStatus(BAD_STATUS));
+            return new ResponseEntity(new ThrowableDto(t), getStatus(BAD_STATUS));
         }
     }
 
     public HttpStatus getStatus(int status){
         return HttpStatus.resolve(status);
     }
+
+    // dto class for general throable exceptions
+    public static class ThrowableDto extends MessageKey{
+        private Throwable cause;
+        public ThrowableDto(Throwable t){
+            this(t.getMessage());
+            this.cause = t.getCause();
+        }
+        protected ThrowableDto(String message) {
+            super.tag(MessageKeyTags.RUN_TIME_ERROR).message(message);
+        }
+    }
 }
+
+

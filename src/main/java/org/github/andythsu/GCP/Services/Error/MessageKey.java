@@ -60,6 +60,22 @@ public class MessageKey {
         this.defaultMessage = defaultMessage;
     }
 
+    public MessageKey() {}
+
+    public MessageKey status(int status){
+        this.status = status;
+        return this;
+    }
+
+    public MessageKey tag(String tag){
+        this.tag = tag;
+        return this;
+    }
+
+    public MessageKey message(String message){
+        this.defaultMessage = message;
+        return this;
+    }
 
     public String getTag() {
         return tag;
