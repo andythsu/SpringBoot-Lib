@@ -8,40 +8,40 @@ public class MessageKey {
     private String tag = "GENERIC-TAG";
     private String defaultMessage = "GENERIC-MESSAGE";
 
-    public static final MessageKey INVALID_PARAM = new MessageKey()
-            .tag(MessageKeyTags.INVALID_PARAM)
-            .message("Invalid Parameter")
-            .status(HttpURLConnection.HTTP_BAD_REQUEST);
+    public static final MessageKey INVALID_PARAM = new MessageKey(
+            HttpURLConnection.HTTP_BAD_REQUEST,
+            MessageKeyTags.INVALID_PARAM,
+            "Invalid Parameter");
 
-    public static final MessageKey INVALID_JSON = new MessageKey()
-            .tag(MessageKeyTags.INVALID_JSON)
-            .message("Invalid JSON format")
-            .status(HttpURLConnection.HTTP_BAD_REQUEST);
+    public static final MessageKey INVALID_JSON = new MessageKey(
+            HttpURLConnection.HTTP_BAD_REQUEST,
+            MessageKeyTags.INVALID_JSON,
+            "Invalid JSON format");
 
-    public static final MessageKey DATA_FETCH_ERROR = new MessageKey()
-            .tag(MessageKeyTags.DATA_ERROR)
-            .message("Error Fetching Data")
-            .status(HttpURLConnection.HTTP_INTERNAL_ERROR);
+    public static final MessageKey DATA_FETCH_ERROR = new MessageKey(
+            HttpURLConnection.HTTP_INTERNAL_ERROR,
+            MessageKeyTags.DATA_ERROR,
+            "Error Fetching Data");
 
-    public static final MessageKey NETWORK_ERROR = new MessageKey()
-            .tag(MessageKeyTags.NETWORK_ERROR)
-            .message("Network Error")
-            .status(HttpURLConnection.HTTP_GATEWAY_TIMEOUT);
+    public static final MessageKey NETWORK_ERROR = new MessageKey(
+            HttpURLConnection.HTTP_GATEWAY_TIMEOUT,
+            MessageKeyTags.NETWORK_ERROR,
+            "Network Error");
 
-    public static final MessageKey UNAUTHORIZED = new MessageKey()
-            .tag(MessageKeyTags.CREDENTIAL_ERROR)
-            .message("Invalid Credentials")
-            .status(HttpURLConnection.HTTP_UNAUTHORIZED);
+    public static final MessageKey UNAUTHORIZED = new MessageKey(
+            HttpURLConnection.HTTP_UNAUTHORIZED,
+            MessageKeyTags.CREDENTIAL_ERROR,
+            "Invalid Credentials");
 
-    public static final MessageKey INVALID_TOKEN = new MessageKey()
-            .tag(MessageKeyTags.TOKEN_ERROR)
-            .message("Invalid token")
-            .status(HttpURLConnection.HTTP_UNAUTHORIZED);
+    public static final MessageKey INVALID_TOKEN = new MessageKey(
+            HttpURLConnection.HTTP_UNAUTHORIZED,
+            MessageKeyTags.TOKEN_ERROR,
+            "Invalid Token");
 
-    public static final MessageKey EXPIRED_TOKEN = new MessageKey()
-            .tag(MessageKeyTags.TOKEN_ERROR)
-            .message("Token has expired. Request a new one")
-            .status(HttpURLConnection.HTTP_UNAUTHORIZED);
+    public static final MessageKey EXPIRED_TOKEN = new MessageKey(
+            HttpURLConnection.HTTP_UNAUTHORIZED,
+            MessageKeyTags.TOKEN_ERROR,
+            "Token has expired. Request a new one");
 
 
     public static class MessageKeyTags {
@@ -58,23 +58,6 @@ public class MessageKey {
         this.status = status;
         this.tag = tag;
         this.defaultMessage = defaultMessage;
-    }
-
-    public MessageKey(){ }
-
-    public MessageKey tag(String tag){
-        this.tag = tag;
-        return this;
-    }
-
-    public MessageKey status(int status){
-        this.status = status;
-        return this;
-    }
-
-    public MessageKey message(String defaultMessage){
-        this.defaultMessage = defaultMessage;
-        return this;
     }
 
 
